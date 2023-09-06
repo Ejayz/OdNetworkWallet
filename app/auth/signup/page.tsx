@@ -4,6 +4,11 @@ import { FormikValues, FormikHelpers } from "formik/dist/types";
 import * as Yup from "yup";
 import Image from "next/image";
 import InputWithError from "@/app/components/InputWithError";
+import { SupabaseClient } from "@supabase/supabase-js";
+import * as dotenv from "dotenv";
+import { toast } from "react-toastify";
+dotenv.config();
+
 export default function Login() {
   const SignupValidation = Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Required"),
@@ -41,8 +46,35 @@ export default function Login() {
             }}
             validationSchema={SignupValidation}
             onSubmit={async (values) => {
-              await new Promise((r) => setTimeout(r, 500));
-              alert(JSON.stringify(values, null, 2));
+              let headersList = {
+                Accept: "*/*",
+                "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+                "Content-Type": "application/json",
+              };
+
+              let bodyContent = JSON.stringify({
+                username: values.username,
+                password: values.password,
+                email: values.email,
+              });
+
+              let response = await fetch(
+                "http://localhost:3000/api/post/Auth/SignUp",
+                {
+                  method: "POST",
+                  body: bodyContent,
+                  headers: headersList,
+                }
+              );
+
+              let data = await response.json();
+              if (response.status == 200) {
+                toast.success(
+                  "Account Created Successfully . You can now login to your account."
+                );
+              } else if (response.status == 400) {
+                toast.error(data.message);
+              }
             }}
           >
             {({ errors, touched }) => (
@@ -107,7 +139,9 @@ export default function Login() {
                     </a>
                   </label>
                   <div className="form-control mt-6">
-                    <button className="btn btn-primary">Create Account</button>
+                    <button type="submit" className={"btn btn-primary"}>
+                      Create Account
+                    </button>
                   </div>
                 </div>
               </Form>
