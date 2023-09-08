@@ -7,17 +7,13 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { email, password, username } = req.body;
-  const { data, error } = await supabase.auth.signUp({
+  const { email, password } = req.body;
+
+  const { data, error } = await supabase.auth.signInWithPassword({
     email: email,
     password: password,
-    options: {
-      data: {
-        username: username,
-      },
-      emailRedirectTo: "/localhost:3000/welcome",
-    },
   });
+
   console.log(data, error);
   if (error) {
     return res.status(400).json({ message: error.message });

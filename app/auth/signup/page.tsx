@@ -7,9 +7,13 @@ import InputWithError from "@/app/components/InputWithError";
 import { SupabaseClient } from "@supabase/supabase-js";
 import * as dotenv from "dotenv";
 import { toast } from "react-toastify";
+import { useState } from "react";
+import { redirect, useRouter } from "next/navigation";
 dotenv.config();
 
 export default function Login() {
+  const [isSubmit, setIsSubmit] = useState(false);
+  const nav = useRouter();
   const SignupValidation = Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Required"),
     username: Yup.string()
@@ -57,7 +61,7 @@ export default function Login() {
                 password: values.password,
                 email: values.email,
               });
-
+              setIsSubmit(true);
               let response = await fetch(
                 "http://localhost:3000/api/post/Auth/SignUp",
                 {
@@ -72,8 +76,14 @@ export default function Login() {
                 toast.success(
                   "Account Created Successfully . You can now login to your account."
                 );
+                setIsSubmit(false);
+                nav.push("/auth/login");
               } else if (response.status == 400) {
                 toast.error(data.message);
+                setIsSubmit(false);
+              } else {
+                toast.error("Something went wrong. Please try again later.");
+                setIsSubmit(false);
               }
             }}
           >
@@ -116,6 +126,7 @@ export default function Login() {
                     errors={errors.repeat_password}
                     touched={touched.repeat_password}
                   />
+                  {/* Add the TOS and Privacy Policies redirect and actual webpages. */}
                   <p className=" label-text-alt  text-sm">
                     Signing up to this website means you agree to our
                     <span> </span>
@@ -139,8 +150,24 @@ export default function Login() {
                     </a>
                   </label>
                   <div className="form-control mt-6">
-                    <button type="submit" className={"btn btn-primary"}>
-                      Create Account
+                    <button
+                      type="submit"
+                      className={`btn ${
+                        isSubmit ? "btn-disabled " : "btn-primary"
+                      }`}
+                    >
+                      {
+                        <div className="flex items-center justify-center">
+                          {isSubmit ? (
+                            <>
+                              <span className="p-2">Please wait </span>
+                              <div className="loading loading-dots loading-md"></div>
+                            </>
+                          ) : (
+                            "Sign Up"
+                          )}
+                        </div>
+                      }
                     </button>
                   </div>
                 </div>
