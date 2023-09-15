@@ -20,10 +20,9 @@ export default function Login() {
   });
 
   return (
-    <div className="hero min-h-screen bg-base-200">
+    <div className="hero min-h-screen bg-white">
       <div className=" w-full flex flex-col lg:flex-row-reverse">
-        <div className="text-center flex flex-col w-1/2 lg:text-left">
-          {/* <h2 className="text-3xl font-bold text-center">Sign up now!</h2> */}
+        <div className="text-center hidden  lg:flex flex-col w-1/2 lg:text-left">
           <Image
             src={"/svgs/tablet-login-animate.svg"}
             alt={"Login-Animated"}
@@ -32,14 +31,14 @@ export default function Login() {
             className="mx-auto my-auto"
           ></Image>
         </div>
-        <div className="w-1/2  h-auto">
+        <div className="lg:w-1/2 w-full h-auto">
           <Formik
             initialValues={{
               email: "",
               password: "",
             }}
             validationSchema={SignupValidation}
-            onSubmit={async (values) => {
+            onSubmit={async (values, { resetForm }) => {
               let headersList = {
                 Accept: "*/*",
                 "User-Agent": "Thunder Client (https://www.thunderclient.com)",
@@ -50,21 +49,21 @@ export default function Login() {
                 email: values.email,
               });
               setIsSubmit(true);
-              let response = await fetch(
-                "http://localhost:3000/api/post/Auth/LogIn",
-                {
-                  method: "POST",
-                  body: bodyContent,
-                  headers: headersList,
-                }
-              );
+              let response = await fetch("/api/post/auth/login", {
+                method: "POST",
+                body: bodyContent,
+                headers: headersList,
+              });
               let data = await response.json();
               if (response.status == 200) {
                 toast.success(
-                  "Account Created Successfully . You can now login to your account."
+                  "Logged in as " +
+                    data.data.username +
+                    ". Redirecting to dashboard"
                 );
+                resetForm();
+                nav.push("/user/dashboard");
                 setIsSubmit(false);
-                nav.push("/auth/login");
               } else if (response.status == 400) {
                 toast.error(data.message);
                 setIsSubmit(false);
@@ -75,14 +74,17 @@ export default function Login() {
             }}
           >
             {({ errors, touched }) => (
-              <Form className="card flex-shrink-0 w-1/2 ml-auto mr-0 max-w-lg shadow-2xl bg-base-100 p-4">
+              <Form className="card flex-shrink-0 w-1/2 ml-auto mr-0 max-w-lg shadow-lg bg-white p-4">
+                <h2 className="text-3xl font-bold text-center text-base-content">
+                  Log In
+                </h2>
                 <div className="card-body">
                   <InputWithError
                     componentName="email"
                     componentType="text"
                     placeHolder="Email"
-                    componentClassName="input input-bordered"
-                    classes="text-xs text-error"
+                    componentClassName="input input-bordered "
+                    classes="text-base text-error"
                     errors={errors.email}
                     touched={touched.email}
                   />
@@ -91,8 +93,8 @@ export default function Login() {
                     componentName="password"
                     componentType="password"
                     placeHolder="Password"
-                    componentClassName="input input-bordered"
-                    classes="text-xs text-error"
+                    componentClassName="input input-bordered "
+                    classes="text-base text-error"
                     errors={errors.password}
                     touched={touched.password}
                   />
@@ -100,17 +102,17 @@ export default function Login() {
                   <label className="label">
                     <a
                       href="/auth/login"
-                      className="label-text-alt link link-hover"
+                      className="text-base-content link link-hover"
                     >
                       Forgot password?
                     </a>
                   </label>
                   <label className="label">
                     <a
-                      href="/auth/login"
-                      className="label-text-alt link link-hover"
+                      href="/auth/signup"
+                      className=" text-base-content link link-hover"
                     >
-                      Already have an account? Sign in!
+                      No account ? Create one .
                     </a>
                   </label>
                   <div className="form-control mt-6">

@@ -18,7 +18,7 @@ export default async function handler(
       emailRedirectTo: "/localhost:3000/welcome",
     },
   });
-  console.log(data, error);
+
   if (error) {
     return res.status(400).json({ message: error.message });
   } else if (data.user?.identities?.length === 0) {

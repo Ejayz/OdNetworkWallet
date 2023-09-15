@@ -28,10 +28,9 @@ export default function Login() {
   });
 
   return (
-    <div className="hero min-h-screen bg-base-200">
+    <div className="hero min-h-screen bg-white">
       <div className=" w-full flex flex-col lg:flex-row-reverse">
         <div className="text-center flex flex-col w-1/2 lg:text-left">
-          {/* <h2 className="text-3xl font-bold text-center">Sign up now!</h2> */}
           <Image
             src={"/svgs/sign-up-animate.svg"}
             alt={"Login-Animated"}
@@ -62,14 +61,11 @@ export default function Login() {
                 email: values.email,
               });
               setIsSubmit(true);
-              let response = await fetch(
-                "http://localhost:3000/api/post/Auth/SignUp",
-                {
-                  method: "POST",
-                  body: bodyContent,
-                  headers: headersList,
-                }
-              );
+              let response = await fetch("/api/post/auth/SignUp", {
+                method: "POST",
+                body: bodyContent,
+                headers: headersList,
+              });
 
               let data = await response.json();
               if (response.status == 200) {
@@ -89,6 +85,9 @@ export default function Login() {
           >
             {({ errors, touched }) => (
               <Form className="card flex-shrink-0 w-1/2 ml-auto mr-0 max-w-lg shadow-2xl bg-base-100 p-4">
+                <h2 className="text-3xl text-base-content font-bold text-center">
+                  Sign Up
+                </h2>
                 <div className="card-body">
                   <InputWithError
                     componentName="email"
@@ -127,8 +126,8 @@ export default function Login() {
                     touched={touched.repeat_password}
                   />
                   {/* Add the TOS and Privacy Policies redirect and actual webpages. */}
-                  <p className=" label-text-alt  text-sm">
-                    Signing up to this website means you agree to our
+                  <p className=" label-text-alt  text-base">
+                    By signing up, you agree to our
                     <span> </span>
                     <a href="#" className=" link">
                       Terms of Service

@@ -34,12 +34,12 @@ export default function InputWithError({
   return (
     <div className="form-control">
       <label className="label">
-        <span className="label-text">{placeHolder}</span>
+        <span className="label-text text-lg">{placeHolder}</span>
       </label>
       <Field
         type={componentType}
         placeholder={placeHolder}
-        className={componentClassName}
+        className={` ${componentClassName} text-base-content`}
         name={componentName}
       />
       {errors && touched ? (
@@ -60,7 +60,7 @@ export default function InputWithError({
           <ErrorMessage
             name={componentName}
             component="div"
-            className={classes}
+            className={`${classes} text-base`}
           />
         </div>
       ) : null}
