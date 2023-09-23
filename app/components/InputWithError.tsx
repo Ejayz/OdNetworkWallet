@@ -1,17 +1,7 @@
 "use client";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 
-/**
- * Returns the sum of two numbers.
- * @componentName {string} - The name of input component.
- * @componentType {string} - The type of input component.
- * @placeHolder {string} - The placeholder of input component.
- * @componentClassName {string} - The className of input component.
- * @classes {string} - The classes for error message.
- * @errors {string} - The errors for error message.
- * @touched {string} - The touched for error message.
- * @returns {JSX.Element} - Rendered InputWithError component.
- */
+
 
 type Props = {
   componentName: string;

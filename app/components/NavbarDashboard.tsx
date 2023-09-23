@@ -1,6 +1,10 @@
 "use client";
-import Link from "next/link";
-export function NavbarDashboard() {
+import Avatar from "boring-avatars";
+import Image from "next/image";
+type NavBarInfo = {
+  username: string;
+};
+export function NavbarDashboard({ username }: NavBarInfo) {
   return (
     <div className="navbar bg-white shadow-xl text-base-content text-2xl w-full">
       <div className="navbar-start w-auto">
@@ -44,14 +48,19 @@ export function NavbarDashboard() {
             </li>
           </ul>
         </div>
-        <a href="/" className="btn btn-ghost normal-case text-xl">
-          ODNetwork Wallet
+        <a href="/" className="">
+          <Image
+            src="/pngs/odn4-tr.png"
+            width="200"
+            height="200"
+            alt={"Logo"}
+          ></Image>
         </a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <a>Earn</a>
+            <a href="/user/dashboard">Dashboard</a>
           </li>
           <li tabIndex={2} className="block">
             <details>
@@ -70,9 +79,31 @@ export function NavbarDashboard() {
             </details>
           </li>
           <li>
+            <a>Faucet List</a>
+          </li>
+          <li>
+            <a>Merchant List</a>
+          </li>
+          <li>
             <a>Accounts</a>
           </li>
+          <li>
+            <a>Logout</a>
+          </li>
         </ul>
+      </div>
+      <div className="ml-auto mr-6">
+        <div className="avatar ">
+          <div className="w-12 rounded-full">
+            <img
+              src={`https://source.boringavatars.com/beam/120/${
+                username || "default"
+              }?colors=216778,189bcc,e9c46a,C271B4,189bcc`}
+            />
+          </div>
+        </div>
+
+        <span> {username || "Fetching..."}</span>
       </div>
     </div>
   );

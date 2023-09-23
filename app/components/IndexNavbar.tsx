@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-
+import Image from "next/image";
 export function IndexNavbar() {
   return (
     <div className="navbar bg-white text-base-content text-2xl w-full">
@@ -45,8 +45,13 @@ export function IndexNavbar() {
             </li>
           </ul>
         </div>
-        <a href="/" className="btn btn-ghost normal-case text-xl">
-          ODNetwork Wallet
+        <a href="/" className="">
+          <Image
+            src="/pngs/odn4-tr.png"
+            width="200"
+            height="200"
+            alt={"Logo"}
+          ></Image>
         </a>
       </div>
       <div className="navbar-center hidden lg:flex">

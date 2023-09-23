@@ -9,7 +9,6 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const { email, password } = req.body;
-
   const { data, error } = await supabase.auth.signInWithPassword({
     email: email,
     password: password,
@@ -26,7 +25,7 @@ export default async function handler(
     res.setHeader(
       "Set-Cookie",
       serialize("auth_token", token, {
-        httpOnly: true,
+        httpOnly: false,
         maxAge: data.session.expires_in,
         path: "/",
       })
