@@ -1,10 +1,10 @@
 "use client";
 import Link from "next/link";
-
+import Image from "next/image";
 export function IndexNavbar() {
   return (
-    <div className="navbar bg-neutral">
-      <div className="navbar-start">
+    <div className="navbar bg-white text-base-content text-2xl w-full">
+      <div className="navbar-start w-auto">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
             <svg
@@ -24,7 +24,7 @@ export function IndexNavbar() {
           </label>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+            className="menu menu-sm dropdown-content mt-3 z-[1]  shadow bg-white rounded-box w-52 "
           >
             <li>
               <a>Item 1</a>
@@ -45,7 +45,14 @@ export function IndexNavbar() {
             </li>
           </ul>
         </div>
-        <a className="btn btn-ghost normal-case text-xl">OdNetwork Wallet</a>
+        <a href="/" className="">
+          <Image
+            src="/pngs/odn4-tr.png"
+            width="200"
+            height="200"
+            alt={"Logo"}
+          ></Image>
+        </a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
@@ -67,16 +74,13 @@ export function IndexNavbar() {
           </li>
           <li>
             <a>Help</a>
+          </li>{" "}
+          <li>
+            <Link className="link link-primary" href={"/auth/login/"}>
+              Login / Sign up
+            </Link>
           </li>
         </ul>
-      </div>
-      <div className="navbar-end">
-        <Link
-          href={"/auth/login/"}
-          className="btn btn-primary hover:btn-secondary"
-        >
-          Login / Sign up
-        </Link>
       </div>
     </div>
   );
