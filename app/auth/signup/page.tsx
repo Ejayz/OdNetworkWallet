@@ -28,7 +28,7 @@ export default function Login() {
   });
 
   return (
-    <div className="hero min-h-screen bg-white">
+    <div className="hero min-h-screen font-monst bg-white">
       <div className=" w-full flex flex-col lg:flex-row-reverse">
         <div className="text-center flex flex-col w-1/2 lg:text-left">
           <Image

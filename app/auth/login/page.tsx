@@ -10,6 +10,12 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 import { redirect, useRouter } from "next/navigation";
 dotenv.config();
+import { Montserrat } from "next/font/google";
+const MontserratFont = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  display: "swap",
+});
 
 export default function Login() {
   const [isSubmit, setIsSubmit] = useState(false);
@@ -20,7 +26,7 @@ export default function Login() {
   });
 
   return (
-    <div className="hero min-h-screen bg-white">
+    <div className="hero min-h-screen font-monst bg-white">
       <div className=" w-full flex flex-col lg:flex-row-reverse">
         <div className="text-center hidden  lg:flex flex-col w-1/2 lg:text-left">
           <Image
@@ -75,7 +81,7 @@ export default function Login() {
           >
             {({ errors, touched }) => (
               <Form className="card flex-shrink-0 w-1/2 ml-auto mr-0 max-w-lg shadow-lg bg-white p-4">
-                <h2 className="text-3xl font-bold text-center text-base-content">
+                <h2 className="text-3xl  text-center font-monst text-base-content">
                   Log In
                 </h2>
                 <div className="card-body">

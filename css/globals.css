@@ -25,3 +25,16 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+@font-face {
+  font-family: "monst-italic";
+  src: url("/Montserrat/static/Montserrat-Italic.ttf");
+}
+@font-face {
+  font-family: "monst-thin";
+  src: url("/Montserrat/static/Montserrat-Thin.ttf");
+}
+@font-face {
+  font-family: "monst-bold";
+  src: url("/Montserrat/static/Montserrat-Bold.ttf");
+}

@@ -7,6 +7,12 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import cookie_processor from "@/hooks/processor";
 import { JwtPayload } from "jsonwebtoken";
+import { Montserrat } from "next/font/google";
+const MontserratFont = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  display: "swap",
+});
 
 export default function RootLayout({
   children,
@@ -29,10 +35,12 @@ export default function RootLayout({
 
   return data == "" ? (
     <html lang="en">
-      <body className="w-screen h-screen flex flex-col bg-white overflow-y-auto">
+      <body
+        className={`w-screen h-screen flex flex-col font-monst bg-white overflow-y-auto  ${MontserratFont.variable}`}
+      >
         <div className="h-full w-full bg-white flex">
-          <div className="mx-auto">
-            <h1 className="text-base-content mx-auto">
+          <div className="mx-auto my-auto">
+            <h1 className="text-base-content text-2xl mx-auto">
               Please wait while we load some things...
             </h1>
           </div>
@@ -41,7 +49,9 @@ export default function RootLayout({
     </html>
   ) : (
     <html lang="en">
-      <body className="w-full h-full flex flex-col bg-white overflow-y-auto">
+      <body
+        className={`w-full h-full flex flex-col font-monst bg-white overflow-y-auto  ${MontserratFont.variable}`}
+      >
         <NavbarDashboard username={data.user_metadata.username} />
         <ToastContainer
           position="top-right"

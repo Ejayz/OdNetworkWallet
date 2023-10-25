@@ -1,12 +1,21 @@
 "use client";
 import Avatar from "boring-avatars";
 import Image from "next/image";
+import { Montserrat } from "next/font/google";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+const MontserratFont = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  display: "swap",
+});
 type NavBarInfo = {
   username: string;
 };
 export function NavbarDashboard({ username }: NavBarInfo) {
+  const nav = useRouter();
   return (
-    <div className="navbar bg-white shadow-xl text-base-content text-2xl w-full">
+    <div className="navbar bg-white shadow-xl font-monst text-base-content text-2xl w-full">
       <div className="navbar-start w-auto">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -88,7 +97,33 @@ export function NavbarDashboard({ username }: NavBarInfo) {
             <a>Accounts</a>
           </li>
           <li>
-            <a>Logout</a>
+            <button
+              onClick={async (e) => {
+                e.preventDefault();
+                let headersList = {
+                  Accept: "*/*",
+                  "User-Agent":
+                    "Thunder Client (https://www.thunderclient.com)",
+                };
+
+                let response = await fetch("/api/post/auth/logout/", {
+                  method: "POST",
+                  headers: headersList,
+                });
+
+                let data = await response.json();
+                if (response.status == 200) {
+                  toast.success(data.message);
+                  nav.push("/auth/login");
+                } else if (response.status == 400) {
+                  toast.error(data.message);
+                } else {
+                  toast.error("Something went wrong. Please try again later.");
+                }
+              }}
+            >
+              Logout
+            </button>
           </li>
         </ul>
       </div>

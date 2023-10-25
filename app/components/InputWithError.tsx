@@ -22,7 +22,7 @@ export default function InputWithError({
   touched,
 }: Props) {
   return (
-    <div className="form-control">
+    <div className="form-control font-monst">
       <label className="label">
         <span className="label-text text-lg">{placeHolder}</span>
       </label>

@@ -1,9 +1,15 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
+import { Montserrat } from "next/font/google";
+const MontserratFont = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  display: "swap",
+});
 export function IndexNavbar() {
   return (
-    <div className="navbar bg-white text-base-content text-2xl w-full">
+    <div className="navbar bg-white  text-base-content text-2xl w-full">
       <div className="navbar-start w-auto">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
