@@ -3,27 +3,31 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-model tbl_wallet_users {
-  id            BigInt     @id @default(autoincrement())
-  created_at    DateTime   @default(now()) @db.Timestamptz(6)
-  username      String?    @db.VarChar
-  password      String?
-  email_address String?    @db.VarChar
-  is_exist      Boolean?   @default(true)
-  user_plan     Int?       @db.SmallInt
-  user_type     user_type? @relation(fields: [user_plan], references: [id], onDelete: NoAction, onUpdate: NoAction)
+model users {
+  user_id                              Bytes     @id @db.Binary(16) @default(dbgenerated("(uuid_to_bin(uuid()))"))
+  email                                String?   @db.VarChar(150)
+  username                             String?   @db.VarChar(150)
+  password                             String?   @db.VarChar(266)
+  created_at                           DateTime  @default(now()) @db.Timestamp(0)
+  updated_at                           DateTime  @default(now()) @db.Timestamp(0)
+  is_exist                             Boolean   @default(true)
+  OTP                                  Int?
+  is_confirmed                         Boolean   @default(false)
+  user_type                            Int
+  user_type_users_user_typeTouser_type user_type @relation("users_user_typeTouser_type", fields: [user_type], references: [user_type_id], onUpdate: Restrict, map: "users_ibfk_1")
+
+  @@index([user_type], map: "user_type")
 }
 
-/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model user_type {
-  id                Int                @id @default(autoincrement()) @db.SmallInt
-  created_at        DateTime           @default(now()) @db.Timestamptz(6)
-  account_type_name String?            @db.VarChar
-  tbl_wallet_users  tbl_wallet_users[]
+  user_type_id                     Int      @id @default(autoincrement())
+  name                             String   @db.VarChar(64)
+  is_exist                         Boolean  @default(true)
+  created_at                       DateTime @default(now()) @db.Timestamp(0)
+  updated_at                       DateTime @default(now()) @db.Timestamp(0)
+  users_users_user_typeTouser_type users[]  @relation("users_user_typeTouser_type")
 }

@@ -61,7 +61,7 @@ export default function Login() {
                 email: values.email,
               });
               setIsSubmit(true);
-              let response = await fetch("/api/post/auth/SignUp", {
+              let response = await fetch("/api/post/auth/signup", {
                 method: "POST",
                 body: bodyContent,
                 headers: headersList,
